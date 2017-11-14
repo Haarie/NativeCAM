@@ -48,7 +48,7 @@ decimal_point = locale.localeconv()["decimal_point"]
 DEFAULT_USE_NO_ICON = True
 NO_ICON_FILE = 'no-icon.png'
 
-# info at http://www.pygtk.org/pygtk2reference/pango-markup-language.html
+# info at http://www.pyGtk.org/pygtk2reference/pango-markup-language.html
 header_fmt_str = '<i>%s...</i>'
 sub_header_fmt_str = '<i>%s...</i>'
 sub_header_fmt_str2 = '<b><i>%s</i></b>'
@@ -628,7 +628,7 @@ class CellRendererMx(Gtk.CellRendererText):
         self.tool_list = toollist
 
     def set_options(self, value):
-        self.options = value.replace('&#176;', '°')
+        self.options = value.replace('&#176;', u'\N{DEGREE SIGN}') #'°')
 
     def set_digits(self, value):
         self.digits = value
@@ -1063,7 +1063,7 @@ class CellRendererMx(Gtk.CellRendererText):
         sw.add(ls_view)
 
         lw_height = base_height + 4 + self.cell_area.height * min(count, 10)
-        (tree_x, tree_y) = self.tv.get_bin_window().get_origin()
+        (ignore, tree_x, tree_y) = self.tv.get_bin_window().get_origin()
         (tree_w, tree_h) = self.tv.get_bin_window().get_geometry()[2:4]
         y = tree_y + min(self.cell_area.y, tree_h - lw_height)
 
@@ -1245,10 +1245,10 @@ class CellRendererMx(Gtk.CellRendererText):
             self.textedit_window.realize()
 
             # position the popup on the edited cell within the treeview
-            (tree_x, a) = treeview.window.get_origin()
-            (a, tree_y) = treeview.get_bin_window().get_origin()
-            (tree_w, tree_h) = treeview.window.get_geometry()[2:4]
-            (t_w, t_h) = self.textedit_window.window.get_geometry()[2:4]
+            (ignore, tree_x, a) = treeview.get_window().get_origin()
+            (ignore, a, tree_y) = treeview.get_bin_window().get_origin()
+            (tree_w, tree_h) = treeview.get_window().get_geometry()[2:4]
+            (t_w, t_h) = self.textedit_window.get_window().get_geometry()[2:4]
             y = tree_y + min(cell_area.y, tree_h - t_h +
                              treeview.get_visible_rect().y)
 
@@ -1259,7 +1259,7 @@ class CellRendererMx(Gtk.CellRendererText):
             response = self.textedit_window.run()
             if response == Gtk.ResponseType.OK:
                 (iter_first, iter_last) = self.textbuffer.get_bounds()
-                text = self.textbuffer.get_text(iter_first, iter_last)
+                text = self.textbuffer.get_text(iter_first, iter_last, True)
                 self.edited(self, path, text)
             self.textedit_window.destroy()
             self.refresh_fn(self.tv)
@@ -1504,7 +1504,7 @@ class Feature(object):
     def get_tooltip(self):
         s = _(self.attr["tool_tip"]) if "tool_tip" in self.attr else \
             _(self.attr["help"]) if "help" in self.attr else None
-        return s.replace('&#176;', '°')
+        return s.replace('&#176;', u'\N{DEGREE SIGN}') #'°')
 
     def get_attr(self, attr) :
         return self.attr[attr] if attr in self.attr else None
@@ -3556,7 +3556,7 @@ class NCam(Gtk.VBox):
 
     def treestore_from_xml(self, xml):
 
-        treestore = gtk.TreeStore(object, str, gobject.TYPE_BOOLEAN, gobject.TYPE_BOOLEAN)
+        treestore = Gtk.TreeStore(object, str, GObject.TYPE_BOOLEAN, GObject.TYPE_BOOLEAN)
 
         def recursive(itr, xmlpath):
             for xml in xmlpath :
@@ -3624,7 +3624,7 @@ class NCam(Gtk.VBox):
 
 
         if xml is not None :
-            recursive(treestore, treestore.get_iter_first(), xml)
+            recursive(treestore.get_iter_first(), xml)
         self.treestore = treestore
         self.master_filter = self.treestore.filter_new()
         self.master_filter.set_visible_column(2)
@@ -3864,6 +3864,7 @@ class NCam(Gtk.VBox):
                 parent = dest.getparent()
                 i = parent.index(dest)
                 opt = 1
+                print self.selected_feature_path
                 l_path = len(self.selected_feature_path)
                 next_path = (self.selected_feature_path[0:l_path - 1] + \
                         (self.selected_feature_path[l_path - 1] + 1,))
@@ -4284,7 +4285,7 @@ class NCam(Gtk.VBox):
             cell.set_property("wrap-width", 180)
         else :
             cell.set_property("wrap-width", -1)
-        cell.set_property('text', dval.replace('&#176;', '°'))
+        cell.set_property('text', dval.replace('&#176;', u'\N{DEGREE SIGN}')) # '°'))
 
 
     def get_col_icon(self, column, cell, model, itr, somthing) :
