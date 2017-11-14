@@ -3178,7 +3178,9 @@ class NCam(Gtk.VBox):
 
                 self.items_path = model.get_path(itr)
                 n_children = model.iter_n_children(itr)
-                self.items_lpath = (self.items_path + (n_children,))
+                items_indices = self.items_path.get_indices()
+                self.items_lpath = Gtk.TreePath.new_from_indices([items_indices[0], n_children])
+#                self.items_lpath = (self.items_path + (n_children,))
 
             elif self.selected_type in ["header", 'sub-header'] :
                 self.iter_selected_type = tv_select.header
@@ -3240,7 +3242,7 @@ class NCam(Gtk.VBox):
                 if path_parent is None :
                     path_previous = (index_s - 1,)
                 else :
-                    path_previous = path_parent[0: depth - 1] + (index_s - 1,)
+                    path_previous = path_parent[0: depth - 1] + [index_s - 1,]
                 self.iter_previous = model.get_iter(path_previous)
             else :
                 self.iter_previous = None
@@ -3864,10 +3866,10 @@ class NCam(Gtk.VBox):
                 parent = dest.getparent()
                 i = parent.index(dest)
                 opt = 1
-                print self.selected_feature_path
                 l_path = len(self.selected_feature_path)
-                next_path = (self.selected_feature_path[0:l_path - 1] + \
-                        (self.selected_feature_path[l_path - 1] + 1,))
+                indices = (self.selected_feature_path[0:l_path - 1] + \
+                        [self.selected_feature_path[l_path - 1] + 1,])
+                next_path = Gtk.TreePath.new_from_indices(indices)
 
             for x in xml_i :
                 if opt == 1 :
