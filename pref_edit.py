@@ -6,14 +6,14 @@ Created on 2017-03-06
 @author: Fernand
 '''
 
-import gtk
+from gi.repository import Gtk
 import sys, os
-from gtk import gdk
-import pygtk
-pygtk.require('2.0')
+from gi.repository import Gdk
+import gi
+gi.require_version('Gtk', '3.0')
 import ConfigParser
 import gettext, re
-import pango
+from gi.repository import Pango
 
 translate_test = True
 
@@ -108,7 +108,7 @@ class PrefEditor():
         except :
             raise IOError(_("Expected file not found : %s") % 'ncam_pref.glade')
 
-        builder = gtk.Builder()
+        builder = Gtk.Builder()
         if translate_test :
             gf = translate(gf)
         else :
@@ -125,7 +125,7 @@ class PrefEditor():
         else :
             parent = None
 
-        builder.get_object("valueLbl").modify_font(pango.FontDescription('sans 16'))
+        builder.get_object("valueLbl").modify_font(Pango.FontDescription('sans 16'))
         self.adj_WindowWidth = builder.get_object("hscaleWindowWidth").get_adjustment()
         self.adj_tvWidth = builder.get_object("hscaleTVWidth").get_adjustment()
         self.adj_nameColWidth = builder.get_object("hscaleNameColWidth").get_adjustment()
@@ -362,8 +362,8 @@ class PrefEditor():
         imgfile = os.path.join(self.path, 'graphics', icon)
         if imgfile is not None :
             try :
-                return gdk.pixbuf_new_from_file_at_size(imgfile, size, size)
-            except gdk.PixbufError as err :
+                return GdkPixbuf.Pixbuf.new_from_file_at_size(imgfile, size, size)
+            except GdkPixbuf.PixbufError as err :
                 print(err)
         return None
 
