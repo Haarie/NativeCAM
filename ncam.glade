@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.20.0 -->
 <interface>
-  <requires lib="gtk+" version="2.16"/>
-  <!-- interface-naming-policy project-wide -->
+  <requires lib="gtk+" version="3.20"/>
   <object class="GtkAdjustment" id="adj_digits">
     <property name="lower">1</property>
     <property name="upper">6</property>
@@ -42,9 +42,10 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">NativeCAM</property>
     <child>
-      <object class="GtkVBox" id="MainBox">
+      <object class="GtkBox" id="MainBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <signal name="destroy" handler="on_destroy" swapped="no"/>
         <child>
           <placeholder/>
@@ -56,8 +57,9 @@
           <object class="GtkLabel" id="hint_label">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xalign">0</property>
-            <property name="xpad">5</property>
+            <property name="halign">start</property>
+            <property name="margin_left">5</property>
+            <property name="hexpand">True</property>
             <property name="use_markup">True</property>
           </object>
           <packing>
@@ -71,20 +73,24 @@
           <placeholder/>
         </child>
         <child>
-          <object class="GtkVBox" id="vbox4">
+          <object class="GtkBox" id="vbox4">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkHPaned" id="hpaned1">
+              <object class="GtkPaned" id="hpaned1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="position">200</property>
                 <property name="position_set">True</property>
                 <child>
-                  <object class="GtkVPaned" id="ncam_pane">
+                  <object class="GtkPaned" id="ncam_pane">
                     <property name="width_request">180</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="orientation">vertical</property>
                     <property name="position">100</property>
                     <property name="position_set">True</property>
                     <child>
@@ -99,8 +105,6 @@
                           <object class="GtkScrolledWindow" id="feat_scrolledwindow">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="hscrollbar_policy">automatic</property>
-                            <property name="vscrollbar_policy">automatic</property>
                             <property name="shadow_type">in</property>
                             <child>
                               <placeholder/>
@@ -130,8 +134,6 @@
                             <property name="height_request">125</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="hscrollbar_policy">automatic</property>
-                            <property name="vscrollbar_policy">automatic</property>
                             <property name="shadow_type">in</property>
                             <child>
                               <placeholder/>
@@ -170,21 +172,20 @@
                 <property name="label_xalign">0</property>
                 <property name="shadow_type">out</property>
                 <child>
-                  <object class="GtkVBox" id="addVBox">
+                  <object class="GtkBox" id="addVBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkToolbar" id="add_toolbar">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="icon_size">5</property>
-                        <property name="icon_size_set">True</property>
                         <child>
                           <object class="GtkToolButton" id="btnCancelAdd">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="tooltip_text" translatable="yes">Cancel add</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">Cancel add</property>
                             <property name="stock_id">gtk-cancel</property>
                             <signal name="clicked" handler="btn_cancel_add" swapped="no"/>
@@ -199,11 +200,10 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="tooltip_text" translatable="yes">Add cfg file</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">Add cfg file</property>
                             <property name="stock_id">gtk-open</property>
-                            <signal name="clicked" handler="btn_cancel_add" swapped="no"/>
                             <signal name="clicked" handler="action_loadCfg" swapped="no"/>
+                            <signal name="clicked" handler="btn_cancel_add" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -215,11 +215,10 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="tooltip_text" translatable="yes">Import XML file</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">Import XML file</property>
                             <property name="stock_id">gtk-revert-to-saved</property>
-                            <signal name="clicked" handler="btn_cancel_add" swapped="no"/>
                             <signal name="clicked" handler="action_importXML" swapped="no"/>
+                            <signal name="clicked" handler="btn_cancel_add" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -237,12 +236,11 @@
                       <object class="GtkScrolledWindow" id="scrolledwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">automatic</property>
-                        <property name="vscrollbar_policy">automatic</property>
                         <child>
                           <object class="GtkIconView" id="add_iconview">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="margin">0</property>
                             <property name="columns">2</property>
                             <property name="tooltip_column">5</property>
                             <signal name="selection-changed" handler="catalog_activate" swapped="no"/>
