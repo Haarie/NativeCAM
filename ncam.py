@@ -3533,23 +3533,23 @@ class NCam(Gtk.VBox):
                         widget.set_cursor(model.get_path(itr_n))
 
             elif keyname in ["Return", "KP_Enter", "space", "F2"] :
-                widget.set_cursor_on_cell(path, focus_column = widget.get_column(1), start_editing = True)
+                widget.set_cursor_on_cell(path, widget.get_column(1), None, True)
 
             elif keyname == "BackSpace" :
                 widget.get_column(1).get_cell_renderers()[0].set_Input('BS')
-                widget.set_cursor_on_cell(path, focus_column = widget.get_column(1), start_editing = True)
+                widget.set_cursor_on_cell(path, widget.get_column(1), None, True)
 
             elif (keyname[-1] >= "0" and keyname[-1] <= "9") :
                 widget.get_column(1).get_cell_renderers()[0].set_Input(keyname[-1])
-                widget.set_cursor_on_cell(path, focus_column = widget.get_column(1), start_editing = True)
+                widget.set_cursor_on_cell(path, widget.get_column(1), None, True)
 
             elif keyname in ['KP_Decimal', 'period', 'comma', 'KP_Separator'] :
                 widget.get_column(1).get_cell_renderers()[0].set_Input('0' + decimal_point)
-                widget.set_cursor_on_cell(path, focus_column = widget.get_column(1), start_editing = True)
+                widget.set_cursor_on_cell(path, widget.get_column(1), None, True)
 
             elif keyname in ['KP_Subtract', 'KP_Add', 'plus', 'minus'] :
                 widget.get_column(1).get_cell_renderers()[0].set_Input('-')
-                widget.set_cursor_on_cell(path, focus_column = widget.get_column(1), start_editing = True)
+                widget.set_cursor_on_cell(path, widget.get_column(1), None, True)
 
             else :
                 return False
